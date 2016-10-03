@@ -1,5 +1,10 @@
 project.title=rope_swing
 
 #Window settings
-window.height=500
-window.width=500
+menu.height=500
+menu.width=500
+
+#Ingame settings
+ingame.height=600
+ingame.width=800
+ingame.bgimage=res/bgimage.png

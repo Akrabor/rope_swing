@@ -12,8 +12,9 @@ import java.util.Properties;
 public class Controller{
     private static Controller instance = new controller.Controller();
 
+    private String propsLocation = "res/settings.txt";
     private Properties props;
-    private final View view;
+    private final ViewManager viewManager;
     private final Model model;
     private boolean isInitialized = false;
 
@@ -22,9 +23,9 @@ public class Controller{
     private Controller() {
         loadProperties();
 
-        view = new View(Integer.valueOf(props.getProperty("window.height")),
-                Integer.valueOf(props.getProperty("window.width")),
-                props.getProperty("project.title"));
+        viewManager = ViewManager.getInstance();
+
+        viewManager.initialize(propsLocation);
         model = new Model();
         modelThread = new Thread(model);
     }
@@ -32,7 +33,7 @@ public class Controller{
     private void loadProperties(){
         try{
             props = new Properties();
-            FileInputStream s = new FileInputStream("res/settings.txt");
+            FileInputStream s = new FileInputStream(propsLocation);
             props.load(s);
 
         }catch (Exception e){
@@ -45,7 +46,7 @@ public class Controller{
     }
 
     public void initialize() {
-        model.addObserver(view);
+        model.addObserver(viewManager);
 
         modelThread.start();
         System.out.println("modelThread started");
@@ -59,6 +60,10 @@ public class Controller{
 
     public void changePlayerPosition (int x, int y){
         model.changePlayerPosition(x,y);
+    }
+
+    public void startGame(){
+        viewManager.startGameWindow();
     }
 
     public int getPlayerPositionX(){
