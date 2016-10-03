@@ -8,3 +8,4 @@ menu.width=500
 ingame.height=600
 ingame.width=800
 ingame.bgimage=res/bgimage.png
+ingame.player=res/player.png

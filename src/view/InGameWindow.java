@@ -29,6 +29,7 @@ public class InGameWindow extends JFrame{
 
         setTitle(props.getProperty("project.title"));
 
+        loadPlayerImage();
         loadBackgroundImage();
         setSize(Integer.valueOf(props.getProperty("ingame.width")), Integer.valueOf(props.getProperty("ingame.height")));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,6 +49,20 @@ public class InGameWindow extends JFrame{
 
     private void loadBackgroundImage(){
         String path = props.getProperty("ingame.bgimage");
+        File file = new File(path);
+        try{
+            BufferedImage image = ImageIO.read(file);
+            JLabel label = new JLabel(new ImageIcon(image));
+            pane.add(label);
+            pack();
+            setLocation(200,200);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void loadPlayerImage(){
+        String path = props.getProperty("ingame.player");
         File file = new File(path);
         try{
             BufferedImage image = ImageIO.read(file);
